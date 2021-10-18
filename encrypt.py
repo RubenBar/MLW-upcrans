@@ -78,7 +78,7 @@ def decrypt_key(AESkey, key):
 
 
 # List files of a system
-def list_files(option, path):
+def list_files(option):
     path = '.'
     if option == 1:
         extensions = ['txt']
