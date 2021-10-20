@@ -4,18 +4,13 @@ from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 import os, sys, struct
 import argparse
-import secrets
+from Database.keygenerator import class_keys
 
 
 if sys.version_info >= (3, 8, 0):
         import time
         time.clock = time.process_time
 
-class class_keys:
-  def __init__(self, AESkey, PUBLIC_RSAKEY, PRIVATE_RSAKEY):
-    self.AESkey = AESkey
-    self.PUBLIC_RSAKEY = PUBLIC_RSAKEY
-    self.PRIVATE_RSAKEY = PRIVATE_RSAKEY
 
 """
 def parse_args():
@@ -33,13 +28,7 @@ def parse_args():
 
 #Initialize both AES and RSA keys and store in class_keys
 def initialize_keys():
-    AESkey = secrets.token_bytes(32)
-
-    RSAkey = RSA.generate(2048)
-    publickey = RSAkey.publickey().exportKey("PEM")
-    privatekey = RSAkey.exportKey("PEM")
-
-    keys = class_keys(AESkey,publickey,privatekey)
+    keys = class_keys()
     return keys
 
 
