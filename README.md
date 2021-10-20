@@ -4,3 +4,6 @@ Database: generar una base de datos SQLITE donde poder guardar las claves de cif
 
 To-do List:
 - [ ] Arg parsers
+- [ ] Obfuscation using Python
+- [ ] Generate keys 
+
