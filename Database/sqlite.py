@@ -2,14 +2,9 @@ import sqlite3
 
 from sqlite3 import Error
 
-def create_table():
-    con = sql_connection()
-    create_table(con)
-
-
 def sql_connection():
     try:
-        con = sqlite3.connect('mydatabase.db')
+        con = sqlite3.connect('Database/keys.db')
         return con
 
     except Error:
@@ -28,16 +23,29 @@ def create_table(con):
     con.commit()
 
 
-def sql_insert(con, data):
+#Generate the file keys.db -> BBDD
+def create_BBDD():
+    con = sql_connection()
+    create_table(con)
+
+
+#Obtain the last inserted ID_USER
+def last_insert_id():
+    con = sql_connection()
+    cursorObj = con.cursor()    
+    cursorObj.execute('select MAX(id_user) from dataEncrypt')    
+    rows = cursorObj.fetchall()
+    return rows[0][0]
+
+
+#Insert "data" in BBDD
+def sql_insert(data):
+    con = sql_connection()
+    id_user = last_insert_id() + 1 
+    data = (id_user,) + data
     cursorObj = con.cursor()    
     cursorObj.execute('INSERT INTO dataEncrypt(id_user, key_AES, publickey_RSA, privatekey_RSA, decrypted) VALUES(?, ?, ?, ?, ?)', data)    
-    con.commit()       
-
-
-####################################################
-def add_data(data):
-     con = sql_connection()   
-     sql_insert(con, data)
+    con.commit() 
 
 
 ####################################################
@@ -47,8 +55,6 @@ def update_encrypted(decrypted, id):
     cursorObj.execute('UPDATE dataEncrypt SET decrypted = "'+decrypted+'" where id_user = '+id)
     con.commit()
 
-
-####################################################
 def get_keyAES(id):
     con = sql_connection()
     cursorObj = con.cursor()

@@ -1,10 +1,10 @@
 from Crypto import Random
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
-from Crypto.Hash import SHA256
 import os, sys, struct
 import argparse
 from Database.keygenerator import class_keys
+import Database.sqlite as bbdd
 
 
 if sys.version_info >= (3, 8, 0):
@@ -29,6 +29,8 @@ def parse_args():
 #Initialize both AES and RSA keys and store in class_keys
 def initialize_keys():
     keys = class_keys()
+    data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
+    bbdd.sql_insert(data)
     return keys
 
 
