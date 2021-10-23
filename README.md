@@ -1,9 +1,17 @@
 # MLW-Ransomware
-To-do List:
-- [x] Arg parsers
-- [ ] Obfuscation using Python
-- [x] Generar keys automaticamente -> AES y RSA 
-- [ ] Generar un proceso que no se pueda cerrar. [Por ejemplo, crear un padre que cree hijos, cuando un hijo muera, crear otro]
-- [ ] Chat con Tor 
+# Features
+- Encrypt files using AES with random IV.
+- RSA to encrypt AES key. Store key in victim system. 
+- TOR chat support.
 
+# How it Works
+Encrypt files:
+```
+python encrypt.py -e
+```
+
+Decrypt files:
+```
+python encrypt.py -d
+```
 
