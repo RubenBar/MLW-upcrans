@@ -41,7 +41,11 @@ def last_insert_id():
 #Insert "data" in BBDD
 def sql_insert(data):
     con = sql_connection()
-    id_user = last_insert_id() + 1 
+    prevID = last_insert_id()
+    if prevID == None:
+        id_user = 1 
+    else:
+        id_user = prevID + 1 
     data = (id_user,) + data
     cursorObj = con.cursor()    
     cursorObj.execute('INSERT INTO dataEncrypt(id_user, key_AES, publickey_RSA, privatekey_RSA, decrypted) VALUES(?, ?, ?, ?, ?)', data)    

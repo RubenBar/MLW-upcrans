@@ -7,11 +7,13 @@
 # How it Works
 Encrypt files:
 ```
-python encrypt.py -e
+python encrypt.py --encrypt --path .
 ```
 
 Decrypt files:
 ```
-python encrypt.py -d
+python encrypt.py --decrypt --AESkey KEY.txt --RSAkey KEYRSA.txt
+
+Where AESkey is the path generated when files are encrypted and RSAkey is the private key of RSA that is stored in BBDD.
 ```
 

