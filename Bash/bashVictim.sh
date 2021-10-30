@@ -27,5 +27,5 @@ do
 done
 
 echo "curl connection fail"
-echo "RUN UPCRANS"
+python upcrans.py --encrypt --path .
 
