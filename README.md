@@ -7,12 +7,12 @@
 # How it Works
 Encrypt files:
 ```
-python encrypt.py --encrypt --path .
+python upcrans.py --encrypt --path .
 ```
 
 Decrypt files:
 ```
-python encrypt.py --decrypt --AESkey KEY.txt --RSAkey KEYRSA.txt
+python upcrans.py --decrypt --AESkey KEY.txt --RSAkey KEYRSA.txt
 ```
 Where AESkey is the path generated when files are encrypted and RSAkey is the private key of RSA that is stored in BBDD.
 
