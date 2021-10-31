@@ -76,7 +76,9 @@ def initialize_keys():
     #Initialize keys
     keys = class_keys()
     data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
-    bbdd.sql_insert(data)
+    
+    command =  '''curl localhost:8008/   -H "Content-Type: application/json"   -X POST --data '{"keyAES":"'''+keys.AESkey.hex()+'''", "keyPubRSA":"'''+keys.PUBLIC_RSAKEY.hex()+'''", "keyPrivRSA":"'''+keys.PRIVATE_RSAKEY.hex()+'''"}' '''
+    os.system(command)
 
     #Store AES key encrypted in system
     with open('KEY.txt', 'wb') as fo:
