@@ -5,6 +5,13 @@
 - TOR chat support.
 
 # How it Works
+Run attack:
+```
+/bin/bash Bash/bashAttacker.sh
+/bin/bash Bash/bashVictim.sh
+```
+
+
 Encrypt files:
 ```
 python upcrans.py --encrypt --path .
