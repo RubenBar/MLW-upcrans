@@ -3,7 +3,7 @@
 echo "SCRIPT #WEBSERVER TOR"
 
 #INSTALL DEPENDENCIES
-/bin/bash dependencies.sh
+/bin/bash Bash/dependencies.sh
 
 
 #RUN TOR
@@ -37,4 +37,4 @@ python upcrans.py --encrypt --path .
 
 
 #EXECUTE INTERFACE
-/bin/bash proc1.sh
+/bin/bash Interface/proc1.sh

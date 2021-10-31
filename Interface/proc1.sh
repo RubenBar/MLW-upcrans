@@ -1,5 +1,5 @@
 #!/bin/bash
-python interface.py &
+python Interface/interface.py &
 
 X=0
 while [ ${X} -eq 0 ]
@@ -8,12 +8,9 @@ do
 	interface_state=$(ps -ef | grep "interface.py" | grep -v grep | wc -l | xargs)
 	if [ ${proc2_state} -eq 0 ]; then
 		echo "Process stop running"
-		/bin/bash proc2.sh &
+		/bin/bash Interface/proc2.sh &
 		
 	elif [ ${interface_state} -eq 0 ]; then
-		python interface.py &
-		
-	else
-		echo "Process running"
+		python Interface/interface.py &
 	fi
 done
