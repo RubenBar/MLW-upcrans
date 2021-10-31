@@ -1,5 +1,5 @@
 *.txt
 Database/__pycache__
 Files/*
-.upcrans
+*.upcrans
 Database/keys.db

