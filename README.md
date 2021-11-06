@@ -6,7 +6,7 @@ Run attack:
 /bin/bash Bash/bashVictim.sh
 ```
 
-
+## Encrypt / Decrypt files
 Encrypt files:
 ```
 python upcrans.py --encrypt --path .
