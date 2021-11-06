@@ -1,5 +1,5 @@
 # MLW-Ransomware
-# How it Works
+## How it Works
 Run attack:
 ```
 /bin/bash Bash/bashAttacker.sh
