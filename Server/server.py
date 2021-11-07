@@ -24,12 +24,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def write_response(self, content):
         self.send_response(200)
         self.end_headers()
-        #self.wfile.write(content)
 
         content = content.decode('utf-8')        
         json_content = json.loads(content)
         data = (bytes.fromhex(json_content["keyAES"]), bytes.fromhex(json_content["keyPubRSA"]), bytes.fromhex(json_content["keyPrivRSA"]), '0')
-        bbdd.sql_insert(data)
+        id_user = bbdd.sql_insert(data)
+        string_id_user = bytes(id_user, encoding= 'utf-8')
+        
+        self.wfile.write(string_id_user)
 
 if len(argv) > 1:
     arg = argv[1].split(':')

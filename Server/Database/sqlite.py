@@ -51,6 +51,8 @@ def sql_insert(data):
     cursorObj.execute('INSERT INTO dataEncrypt(id_user, key_AES, publickey_RSA, privatekey_RSA, decrypted) VALUES(?, ?, ?, ?, ?)', data)    
     con.commit() 
 
+    return id_user
+
 
 ####################################################
 def update_encrypted(decrypted, id):
