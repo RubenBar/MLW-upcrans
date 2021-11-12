@@ -1,5 +1,5 @@
 #!/bin/bash
-python Interface/interface.py &
+python /home/ruben/Documentos/RANS/MLW-Ransomware/Interface/interface.py &
 
 X=0
 while [ ${X} -eq 0 ]
@@ -8,9 +8,9 @@ do
 	interface_state=$(ps -ef | grep "interface.py" | grep -v grep | wc -l | xargs)
 	if [ ${proc2_state} -eq 0 ]; then
 		echo "Process stop running"
-		/bin/bash Interface/proc2.sh &
+		/bin/bash /home/ruben/Documentos/RANS/MLW-Ransomware/Interface/proc2.sh &
 		
 	elif [ ${interface_state} -eq 0 ]; then
-		python Interface/interface.py &
+		python /home/ruben/Documentos/RANS/MLW-Ransomware/Interface/interface.py &
 	fi
 done
