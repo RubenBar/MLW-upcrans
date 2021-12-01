@@ -12,26 +12,29 @@ PORT = 8008
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_HEAD(self):
+        self.write_response(0,b'')
+
     def do_GET(self):
-        self.write_response(b'')
+        self.write_response(1, b'')
 
     def do_POST(self):
         content_length = int(self.headers.get('content-length', 0))
         body = self.rfile.read(content_length)
 
-        self.write_response(body)
+        self.write_response(2, body)
 
-    def write_response(self, content):
+    def write_response(self, type, content):
         self.send_response(200)
         self.end_headers()
-
-        content = content.decode('utf-8')        
-        json_content = json.loads(content)
-        data = (bytes.fromhex(json_content["keyAES"]), bytes.fromhex(json_content["keyPubRSA"]), bytes.fromhex(json_content["keyPrivRSA"]), '0')
-        id_user = bbdd.sql_insert(data)
-        string_id_user = bytes(id_user, encoding= 'utf-8')
+        if type == 2:
+        	content = content.decode('utf-8')        
+        	json_content = json.loads(content)
+        	data = (bytes.fromhex(json_content["keyAES"]), bytes.fromhex(json_content["keyPubRSA"]), bytes.fromhex(json_content["keyPrivRSA"]), '0')
+        	id_user = bbdd.sql_insert(data)
+        	string_id_user = bytes(id_user, encoding= 'utf-8')
         
-        self.wfile.write(string_id_user)
+        	self.wfile.write(string_id_user)
 
 if len(argv) > 1:
     arg = argv[1].split(':')
