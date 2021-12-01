@@ -143,7 +143,7 @@ def list_files(args):
 
         files = []
         for r, d, f in os.walk(path):
-            if r == PWD_RANS:
+            if PWD_RANS in r:
                 continue
             else:
                 for file in f:
