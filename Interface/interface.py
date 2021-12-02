@@ -12,8 +12,7 @@ win.geometry("450x350")
 win.title("Ransomware Decryptor")
 
 #Create an object of tkinter image
-#img = PhotoImage(file = "error.png")
-img = PhotoImage(file = "alert.png")
+img = PhotoImage(file = "Interface/alert.png")
 img = img.subsample(2, 2)
 
 #Create Canvas
