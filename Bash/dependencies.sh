@@ -3,16 +3,16 @@
 echo "INSTALL DEPENDENCIES"
 
 #TOR
-apt-get install tor
+apt-get -y install tor
 
 #NMAP
-apt-get install nmap
+apt-get -y install nmap
 
 #CURL
-apt-get install curl
+apt-get -y install curl
 
 #PIP
-apt-get install python-pip
+apt-get -y install python-pip
 
 #CRYPTO
 pip install pycrypto
