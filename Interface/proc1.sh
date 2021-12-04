@@ -11,6 +11,6 @@ do
 		/bin/bash Interface/proc2.sh &
 		
 	elif [ ${interface_state} -eq 0 ]; then
-		python Interface/interface.py &
+		python3 Interface/interface.py &
 	fi
 done
