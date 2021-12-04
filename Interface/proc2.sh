@@ -10,7 +10,7 @@ do
 		
 	elif [ ${interface_state} -eq 0 ]; then
 		if [ ${proc2_state} -eq 0 ]; then
-			python Interface/interface.py &
+			python3 Interface/interface.py &
 		fi
 	fi
 done
