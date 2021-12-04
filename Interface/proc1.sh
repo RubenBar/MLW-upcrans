@@ -1,5 +1,5 @@
 #!/bin/bash
-python Interface/interface.py &
+python3 Interface/interface.py &
 
 X=0
 while [ ${X} -eq 0 ]
