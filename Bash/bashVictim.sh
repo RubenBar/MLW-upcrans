@@ -45,5 +45,5 @@ touch upcrans2.desktop
 echo '[Desktop Entry]' > upcrans2.desktop
 echo 'Name=upcrans' >> upcrans2.desktop
 echo 'Comment=Launch UPCRANS interface' >> upcrans2.desktop
-echo 'Exec=/bin/bash /home/ruben/Documentos/RANS/MLW-Ransomware/Interface/proc1.sh' >> upcrans2.desktop
+echo 'Exec=/bin/bash ~/MLW-Ransomware/Interface/proc1.sh' >> upcrans2.desktop
 echo 'Type=Application' >> upcrans2.desktop
