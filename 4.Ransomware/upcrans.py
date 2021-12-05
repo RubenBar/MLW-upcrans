@@ -28,10 +28,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Ransomware-UPCRANS')
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--encrypt', help='Encrypt files',
-                        action='store_true')
-    group.add_argument('--decrypt', help='Decrypt files',
-                        action='store_true')
+    group.add_argument('--encrypt', help='Encrypt files', action='store_true')
+    group.add_argument('--decrypt', help='Decrypt files', action='store_true')
 
     parser.add_argument('--path', help='Path to start attack', action="store", required = '--encrypt' in sys.argv) 
     parser.add_argument('--AESkey', help='Path of the key', action="store", required='--decrypt' in sys.argv) 
