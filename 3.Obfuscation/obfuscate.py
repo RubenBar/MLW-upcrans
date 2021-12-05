@@ -24,8 +24,8 @@ def randomASCII(length=8):
     return ''.join(random.choice(string.ascii_letters) for i in range(length)) 
 
 def addEntropyToName(name):
-    result = name + randomASCII(5)
-    #result = randomASCII(10)
+    #result = name + randomASCII(5)
+    result = randomASCII(10)
     return result 
 
 def deadParameter():
@@ -61,7 +61,6 @@ def deadLoop():
 
     return junk
   
-
 def isBlankLineOrComment(line):
     result = False
     if(line.startswith('#')):
@@ -114,7 +113,8 @@ def methodNames(infilename, outfilename, debug=True):
                 for originalmethodName, newmethodName in methodDir.items():
                     
                     if (originalmethodName + "(") in line:
-                        lineToWrite = line.replace(originalmethodName, newmethodName)
+                        if not ("."+originalmethodName + "(") in line:
+                            lineToWrite = line.replace(originalmethodName, newmethodName)
             
             outfile.write(lineToWrite)
     return
@@ -136,6 +136,8 @@ def getVariableListFromString(input):
     for i in input.split(','):
         if i:
             result.append(i.strip().split('=')[0].split(':')[0])
+
+    result.sort(reverse=False)
 
     return result
 
@@ -259,7 +261,6 @@ def addCode(infilename, outfilename, debug=False):
                 outfile.write(lineToWrite)
     return
 
-
 def shuffleMethods(infilename, outfilename, debug=False):
 
     isMethodBody=False
@@ -343,9 +344,11 @@ def obfuscationManager(infile, outfile, mode, debug=False):
     else:
         methodNames(infile, infile+".tmp1", debug)
         variableNames(infile+".tmp1", infile+".tmp2", debug)
-        shuffleMethods(infile+".tmp2", outfile, debug)
+        shuffleMethods(infile+".tmp2", infile+".tmp3", debug)
+        addCode(infile+".tmp3", outfile, debug)
         os.remove(infile+".tmp1")
         os.remove(infile+".tmp2")
+        os.remove(infile+".tmp")
     return
 
 def main(*args):
