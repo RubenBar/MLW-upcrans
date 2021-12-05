@@ -16,7 +16,7 @@ import os, sys, struct
 import argparse
 from Database.keygenerator import class_keys
 
-URL_TOR = "62uxh4sdczcyr6tkndwy5mvr3xjhmobruq5vxymtzusddcew6deem2ad.onion"
+URL_TOR = "lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
 PWD_RANS = os.path.dirname(os.path.abspath(__file__))
 
 if sys.version_info >= (3, 8, 0):
