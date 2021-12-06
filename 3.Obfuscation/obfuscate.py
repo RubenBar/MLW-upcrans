@@ -100,14 +100,15 @@ def methodNames(infilename, outfilename, debug=True):
                 print("Found method name to obfuscate: {}".format(result.group(1))) if debug else None
 
                 methodName = result.group(1)
+                
+                if not(methodName == 'parse_args'):
+                  # Add entropy to the method
+                  newmethodName = addEntropyToName(methodName)
 
-                # Add entropy to the method
-                newmethodName = addEntropyToName(methodName)
+                  # Add it to the dictionary
+                  methodDir[methodName] = newmethodName
 
-                # Add it to the dictionary
-                methodDir[methodName] = newmethodName
-
-                lineToWrite = line.replace(methodName, newmethodName)
+                  lineToWrite = line.replace(methodName, newmethodName)
             else:
                 # See if an existing rule applies and change it
                 for originalmethodName, newmethodName in methodDir.items():
