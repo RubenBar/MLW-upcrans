@@ -14,7 +14,7 @@ import os
 reservedWords = ['False','def','if','raise',
                     'None','del','import','return',
                     'True','elif','in','try','and',
-                    'else','is','while','as',
+                    'else:','is','while','as',
                     'except','lambda','with',
                     'assert','finally','nonlocal',
                     'yield','break','for','not',
@@ -53,7 +53,7 @@ def deadLoop():
     for_var = ''.join([random.choice(string.ascii_letters) for n in range(random.randint(5, 10))])
     randomParameter = randomASCII()
     randomBoolean = random.choice([ "True", "False" ])
-    junk = "for {} in range ({}): \n".format(for_var, random.randint(1, 10000))
+    junk = "for {} in range ({}): \n".format(for_var, random.randint(1, 10))
     junk +="    {} = {}\n".format(randomParameter, randomBoolean)
     for i in range(random.randint(1,2)):
         deadSatetement = deadParameter();
@@ -112,8 +112,8 @@ def methodNames(infilename, outfilename, debug=True):
                 # See if an existing rule applies and change it
                 for originalmethodName, newmethodName in methodDir.items():
                     
-                    if (originalmethodName + "(") in line:
-                        if not ("."+originalmethodName + "(") in line:
+                    if (originalmethodName + "(") in lineToWrite:
+                        if not ("."+originalmethodName + "(") in lineToWrite:
                             lineToWrite = line.replace(originalmethodName, newmethodName)
             
             outfile.write(lineToWrite)
@@ -124,9 +124,9 @@ def isVariableName(name):
     result = True
     if(name in reservedWords):
         result = False
-    if name.startswith('"') or name.startswith('`') or name.startswith('\''):
+    if name.startswith('"') or name.startswith('`') or name.startswith('\'') or name.startswith("'") or name.startswith("]") or name.startswith("elif"):
         result = False
-    if name.endswith('('):
+    if name.endswith('(') or name.endswith(')'):
         result = False
     
     return result
@@ -241,7 +241,7 @@ def addCode(infilename, outfilename, debug=False):
 
             if(result):
                 
-                if(result.group(1) == 'main'):
+                if(result.group(1) == 'main' or result.group(1) =='create_Readme'):
                     outfile.write(lineToWrite)
                     continue
                 
@@ -249,8 +249,9 @@ def addCode(infilename, outfilename, debug=False):
                 outfile.write(lineToWrite)
             else:
                 if(isMethodBody):
-                    skipVariable = isVariableName(line)
-                    if skipVariable and not line.startswith("elif") and not isBlankLineOrComment(line):
+                    skipVariable = isVariableName(lineToWrite.strip())
+
+                    if skipVariable and not isBlankLineOrComment(line):
                         deadParameterList.append(randomStatement)
                         deadParameterList.append(randomConditional)
                         deadParameterList.append(randomLoop)
@@ -342,13 +343,13 @@ def obfuscationManager(infile, outfile, mode, debug=False):
     elif(mode == 'shuffle-methods'):
         shuffleMethods(infile, outfile, debug)
     else:
-        methodNames(infile, infile+".tmp1", debug)
-        variableNames(infile+".tmp1", infile+".tmp2", debug)
-        shuffleMethods(infile+".tmp2", infile+".tmp3", debug)
-        addCode(infile+".tmp3", outfile, debug)
+        addCode(infile, infile+".tmp1", debug)
+        methodNames(infile+".tmp1", infile+".tmp2", debug)
+        variableNames(infile+".tmp2", infile+".tmp3", debug)
+        shuffleMethods(infile+".tmp3", outfile, debug)
         os.remove(infile+".tmp1")
         os.remove(infile+".tmp2")
-        os.remove(infile+".tmp")
+        os.remove(infile+".tmp3")
     return
 
 def main(*args):
