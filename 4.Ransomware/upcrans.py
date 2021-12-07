@@ -84,6 +84,14 @@ def remove_Dir():
         shutil.rmtree(pathMalware)
 
 
+# Encrypt KEY (AES) with public key (RSA).
+def encrypt_key(AESkey, keyEnc):
+    public_key = RSA.importKey(keyEnc)
+    encryptor = PKCS1_OAEP.new(public_key)
+    encrypted_key = encryptor.encrypt(AESkey)
+    return encrypted_key
+
+
 #Initialize both AES and RSA keys and store in class_keys
 def initialize_keys():
     #Initialize keys
@@ -99,14 +107,6 @@ def initialize_keys():
                 key_encrypted = encrypt_key(keys.AESkey, keys.PUBLIC_RSAKEY)
                 fo.write(key_encrypted)
     return keys
-
-
-# Encrypt KEY (AES) with public key (RSA).
-def encrypt_key(AESkey, keyEnc):
-    public_key = RSA.importKey(keyEnc)
-    encryptor = PKCS1_OAEP.new(public_key)
-    encrypted_key = encryptor.encrypt(AESkey)
-    return encrypted_key
 
 
 #Import key from the "path"
