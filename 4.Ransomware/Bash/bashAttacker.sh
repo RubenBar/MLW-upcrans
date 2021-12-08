@@ -3,6 +3,9 @@
 #Execute tor service
 service tor start
 
+#Execute ssh service
+service ssh start
+
 #Execute FTP
 service vsftpd start
 
