@@ -14,7 +14,7 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import os, sys, struct
 import argparse
-from Database.keygenerator import class_keys
+from KeyDir.keygenerator import class_keys
 import subprocess
 
 URL_TOR = "lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
