@@ -11,7 +11,7 @@ service tor start
 
 
 #VARIABLES
-TOR_URL="lxu7zbrvwbo7ogy7u7yzy65yld2rdgjfcwgoyrkejedqoefboeejspid.onion"
+TOR_URL="iqm2wzp6fg6y4eqtjxruwzcqeaxhfboyv3do6fmoooig45kbhwaooyad.onion"
 TOR_PROXY="localhost:9050"
 CURL_CMD="curl -I -s --socks5-hostname"
 CURL_STAT=0
